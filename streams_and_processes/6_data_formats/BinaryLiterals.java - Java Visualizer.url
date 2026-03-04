@@ -1,0 +1,6 @@
+[InternetShortcut]
+URL=https://cscircles.cemc.uwaterloo.ca/java_visualize/#code=public+class+BinaryLiterals%0A%7B%0A+++public+static+void+main(String%5B%5D+args)%0A+++%7B%0A++++++byte+b+%3D+(byte)+0b10010110%3B%0A+++%7D%0A%7D&mode=edit
+IDList=
+HotKey=0
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,11

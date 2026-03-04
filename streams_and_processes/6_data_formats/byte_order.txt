@@ -1,0 +1,42 @@
+
+Byte Order
+==========
+
+Two questions.
+1. How do you store the bytes of an int in memeory?
+2. How do you write the bytes of an int into a stream?
+
+big-endian byte order and littel-endian byte order
+
+         byte[]
+       +--------+
+       |        |  n + 0
+       +--------+
+       |        |  n + 1
+       +--------+
+       |        |  n + 2
+       +--------+
+  b[0] |        |  n + 3
+       +--------+
+  b[1] |        |  n + 4
+       +--------+
+  b[2] |        |  n + 5
+       +--------+
+  b[3] |        |  n + 6
+       +--------+
+       |        |  n + 5
+       +--------+
+       |        |  n + 6
+       +--------+
+       |        |  n + 7
+       +--------+
+       |        |  n + 8
+       +--------+
+       |        |  n + 9
+       +--------+
+       |        |  n + 10
+       +--------+
+       |        |  n + 11
+       +--------+
+
+

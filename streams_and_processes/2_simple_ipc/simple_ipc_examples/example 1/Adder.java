@@ -1,7 +1,7 @@
-/*
+/**
    This program adds all the numbers on its command-line
    and returns the result as its exit value.
-
+<p>
    To see the return value of this program at the Windows
    command prompt, use the following command after running
    this program.
@@ -16,11 +16,11 @@ public class Adder
       int sum = 0;
 
       // Get the command-line arguments (if they exist).
-      for (int i = 0; i < args.length; i++)
+      for (final String arg : args)
       {
          try
          {
-            sum += Integer.parseInt(args[i]);
+            sum += Integer.parseInt(arg);
          }
          catch (NumberFormatException e)
          {

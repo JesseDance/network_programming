@@ -1,0 +1,6 @@
+[InternetShortcut]
+URL=https://pythontutor.com/visualize.html#code=int%20main%28%29%0A%7B%20//%20It%20is%20not%20easy%20to%20tell%20which%20of%20these%20values%0A%20%20//%20are%20bytes%20and%20which%20values%20are%20not%20bytes.%0A%20%20char%20b0%20%3D%20%200xFF%3B%0A%20%20char%20b1%20%3D%20%200xFFFFFFFF%3B%0A%20%20char%20b2%20%3D%20%200x80%3B%0A%20%20char%20b3%20%3D%20%200xFFFFFF80%3B%0A%20%20char%20b4%20%3D%20%200xFFFFFF00%3B%0A%20%20char%20b5%20%3D%20-0x01%3B%0A%20%20char%20b6%20%3D%20-0x80%3B%0A%20%20char%20b7%20%3D%20%200x88%3B%0A%20%20char%20b8%20%3D%20%200xFFFFFF88%3B%0A%20%20char%20b9%20%3D%20-0x78%3B%0A%0A%20%20signed%20char%20b10%20%3D%20%200xFF%3B%0A%20%20signed%20char%20b11%20%3D%20%200xFFFFFFFF%3B%0A%20%20signed%20char%20b12%20%3D%20%200x80%3B%0A%20%20signed%20char%20b13%20%3D%20%200xFFFFFF80%3B%0A%20%20signed%20char%20b14%20%3D%20%200xFFFFFF00%3B%0A%20%20signed%20char%20b15%20%3D%20-0x01%3B%0A%20%20signed%20char%20b16%20%3D%20-0x80%3B%0A%20%20signed%20char%20b17%20%3D%20%200x88%3B%0A%20%20signed%20char%20b18%20%3D%20%200xFAFBFC88%3B%0A%20%20return%200%3B%0A%7D&cumulative=true&heapPrimitives=true&mode=edit&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=false
+IDList=
+HotKey=0
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,11

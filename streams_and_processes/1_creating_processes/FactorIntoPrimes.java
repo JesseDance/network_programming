@@ -25,7 +25,7 @@ public class FactorIntoPrimes
       if (args.length == 0)
       {
          System.err.println("Usage: java FactorPrimes <big integer>");
-         System.exit(0);
+         System.exit(-1);
       }
 
       BigInteger i = new BigInteger(args[0]);

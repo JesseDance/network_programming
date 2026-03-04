@@ -1,0 +1,24 @@
+#
+# Type   
+#      make
+# to compile all the programs in this folder.
+#
+CC=gcc
+CFLAGS=-g -std=c99 -pedantic -Wall -Wextra
+
+all: redirect_standard_in_ver_1  redirect_standard_in_ver_2  redirect_standard_in_ver_3  redirect_standard_streams
+
+redirect_standard_in_ver_1: redirect_standard_in_ver_1.c
+	$(CC) $(CFLAGS) -o redirect_standard_in_ver_1  redirect_standard_in_ver_1.c
+
+redirect_standard_in_ver_2: redirect_standard_in_ver_2.c
+	$(CC) $(CFLAGS) -o redirect_standard_in_ver_2  redirect_standard_in_ver_2.c
+
+redirect_standard_in_ver_3: redirect_standard_in_ver_3.c
+	$(CC) $(CFLAGS) -o redirect_standard_in_ver_3  redirect_standard_in_ver_3.c
+
+redirect_standard_streams: redirect_standard_streams.c
+	$(CC) $(CFLAGS) -o redirect_standard_streams  redirect_standard_streams.c
+
+clean:
+	rm -f  redirect_standard_in_ver_1  redirect_standard_in_ver_2  redirect_standard_in_ver_3  redirect_standard_streams

@@ -1,24 +1,28 @@
 /*
+
+*/
+
+import java.util.Scanner;
+import java.io.IOException;
+
+/**
    The program "calls" Adder.class as an external process.
    This is a baby example of parallel programming, or a very
    simplified example of how a "remote procedure call" might work.
 */
-import java.util.Scanner;
-import java.io.*;
-
 public class UseAdder
 {
    public static void main(String[] args) throws IOException, InterruptedException
    {
       // Get two command-line arguments for this process.
-      int x1 = 0;
-      int x2 = 0;
+      int n1 = 0;
+      int n2 = 0;
       if (args.length >= 2)
       {
          try
          {
-            x1 = Integer.parseInt(args[0]);
-            x2 = Integer.parseInt(args[1]);
+            n1 = Integer.parseInt(args[0]);
+            n2 = Integer.parseInt(args[1]);
          }
          catch (NumberFormatException e)
          {
@@ -33,21 +37,21 @@ public class UseAdder
       }
 
       // Create a ProcessBuilder object for running Adder.class
-      ProcessBuilder pb = new ProcessBuilder("java", "Adder");
+      final ProcessBuilder pb = new ProcessBuilder("java", "Adder"); // Try using "Adder2".
 
       // Pass arguments to Adder using environment variables.
-      pb.environment().put( "adder-op1", new Integer(x1).toString() );
-      pb.environment().put( "adder-op2", new Integer(x2).toString() );
+      pb.environment().put( "adder_n1", String.valueOf(n1) );
+      pb.environment().put( "adder_n2", String.valueOf(n2) );
 
       // "call" the Adder program.
-      Process p = pb.start();
+      final Process p = pb.start();
       // Wait for the "called" process to return.
       p.waitFor();
 
-      // Read the result from the Adder process's standard output.
-      // Create a new stream to read data from the output of the
-      // Adder process.
-      Scanner scanner = new Scanner( p.getInputStream() );
+      // Read the result from the Adder process's standard output stream.
+      // Create a new input stream to read data from the output stream
+      // of the Adder process.
+      final Scanner scanner = new Scanner( p.getInputStream() );
       int result = scanner.nextInt();
 
       // Write the result to stdout.

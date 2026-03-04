@@ -1,0 +1,131 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 33600 - Homework 1</title>
+  <meta name="description" content="CS 33600 Homework 1">
+  <meta name="author" content="Roger L. Kraft">
+  <link rel="stylesheet" href="http://cs.pnw.edu/~rlkraft/roger-v2.css">
+</head>
+
+<body>
+<!--
+<header>
+  <a href="http://cs.pnw.edu/~rlkraft/" title="Roger L. Kraft">Roger L. Kraft</a>
+</header>
+ -->
+<nav>
+  <ul class="nav-list">
+    <li><a href="../cs33600.html">CS 33600</a></li>
+    <li><a href="../syllabus.html">Syllabus</a></li>
+    <li><a href="../class.html">Lectures and Readings</a></li>
+    <li><a href="../homework.html">Homework Assignments</a></li>
+  </ul>
+  <ul class="nav-list">
+    <li><a href="http://cs.pnw.edu/~rlkraft/roger.html">Roger Kraft</a></li>
+    <li><a href="https://pnw.edu/computer-science/">Computer Science Department</a></li>
+    <li><a href="https://pnw.edu/engineering/">School of Engineering</a></li>
+    <li><a href="https://pnw.edu/college-of-engineering-sciences/">College of Engineering & Sciences</a></li>
+    <li><a href="https://pnw.edu/">Purdue University Northwest</a></li>
+  </ul>
+</nav>
+
+<section id="Content">
+<h1>
+Programming Assignment 1<br>
+CS 33600<br>
+Network Programming<br>
+Spring, 2026
+</h1>
+
+<p>
+This assignment makes use of the files contained in this <a href="hw1.zip">zip file</a>.
+This assignment is due Tuesday, January 27.
+</p>
+<p>
+For this assignment you will write a "launcher" program that creates Windows <a href="https://en.wikipedia.org/wiki/Process_(computing)">processes</a>.
+</p>
+<p>
+This assignment is based on the code examples from <a href="../for-class/streams_and_processes.zip">streams_and_processes.zip</a> and the explanations in <a href="../for-class/readmes/Readme_processes/">Readme_processes.md</a>.
+</p>
+
+<p>
+In the zip file there is an <a href="https://docs.oracle.com/javase/tutorial/deployment/jar/run.html">executable jar file</a> called <code>launcher_demo.jar</code> that you can run by double clicking on <code>launcher_demo.cmd</code>. Your programming assignment is to write a Java program that behaves <em>exactly</em> like this demo program.
+</p>
+
+<p>
+Write a Java console program called <code>Launcher.java</code> that prompts the user with a list of the following eight programs that come with Windows: <code>Taskmrg.exe</code>, <code>notepad.exe</code>, <code>charmap.exe</code>, <code>sndvol.exe</code>, <code>msinfo32.exe</code>, <code>winver.exe</code>, <code>nslookup.exe</code>, and <code>cmd.exe</code>. Have the eight programs numbered in the list from 1 to 8. Have the user choose one of the eight programs by inputting a number between 1 and 8. Then your program should use the Java <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html">ProcessBuilder</a> API to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html#start()">start</a> up the process that the user chose. After the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html">process</a> has been created, output a message that states the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#pid()">PID</a> of the newly created process. After your program launches the user's choice, your program should once again prompt the user with the list of available programs and let the user launch another process (but see a following paragraph for two exceptions). Your program should keep on letting the user launch processes until the user enters zero.
+</p>
+
+<p>
+The programs <code>nslookup.exe</code> and <code>cmd.exe</code> are different because they are not GUI programs, they are console programs like <code>Launcher.java</code>. This means that when they run, those two programs will need to share the console window with the <code>Launcher.java</code> process (it is not possible to create new console windows). Mark the <code>nslookup.exe</code> and <code>cmd.exe</code> programs in the menu with a <code>'*'</code> character in front of their number as a reminder that they are different.
+</p>
+
+<p>
+In order for the launcher process to share its console with a launched process, the launcher program should call the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html#inheritIO()">ProcessBuilder.inheritIO()</a> method before launching the child process. After the launcher program <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html#start()">starts</a> either <code>nslookup.exe</code> or <code>cmd.exe</code>, the launcher program should call the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#waitFor()">Process.waitFor()</a> method to wait for the launched process to terminate (otherwise, the launcher process and the launched process will fight with each other over the console window, and the fight will not end well). In other words, the launcher process <a href="http://en.wikipedia.org/wiki/Blocking_%28computing%29">blocks</a> after it launches either the <code>nslookup.exe</code> or <code>cmd.exe</code> process and the launcher process waits (i.e., remains blocked) until the <code>nslookup.exe</code> or <code>cmd.exe</code> process <a href="http://ss64.com/nt/exit.html">terminates</a>.
+</p>
+
+<p>
+After <code>nslookup.exe</code> or <code>cmd.exe</code> terminates, the launcher program should use the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#exitValue()">Process.exitValue()</a> method to look up the terminated process's <a href="https://beej.us/guide/bgc/html/split/the-outside-environment.html#exit-status">exit code</a> and output a message that states the <a href="https://en.wikipedia.org/wiki/Exit_status">exit value</a>. The launcher program should also use the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#info()">Process.info()</a> method to find, and print out, how much <a href="https://en.wikipedia.org/wiki/CPU_time">CPU time</a> the launched process consumed while it was running. (See the code examples in <a href="../for-class/streams_and_processes.zip">streams_and_processes.zip</a> for an example of a parent process sharing the console and waiting for a child process to exit.)
+</p>
+
+<p>
+The <code>nslookup.exe</code> and <code>cmd.exe</code> programs both have a built in "help" command. Try them. Both <code>nslookup.exe</code> and <code>cmd.exe</code> also have a built in "exit" command that terminates their process. The cmd <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/exit">exit</a> command also allows you to set cmd's exit value. (A Java program sets its exit value by calling the static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/System.html#exit(int)">System.exit(int)</a> method.)
+</p>
+
+<p>
+Make sure that your <code>Launcher.java</code> program handles user input properly. If the user does not enter a value or the user inputs an improper value, then your program should issue another prompt (see the demo program). Make sure that your program behaves exactly like the demo program.
+</p>
+
+<p>
+Here is a list of classes and methods that you can use from the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/">Java API</a>.
+</p>
+<ul>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html">ProcessBuilder</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html#start()">ProcessBuilder.start()</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html#inheritIO()">ProcessBuilder.inheritIO()</a></li>
+
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html">Process</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#pid()">Process.pid()</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#waitFor()">Process.waitFor()</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#exitValue()">Process.exitValue()</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Process.html#info()">Process.info()</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessHandle.Info.html">ProcessHandle.Info</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessHandle.Info.html#totalCpuDuration()">ProcessHandle.Info.totalCpuDuration()</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html">Duration</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html">Optional</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html#get()">Optional.get()</a></li>
+
+<li><a href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-xp/bb490954(v=technet.10)">Command shell overview</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands">Windows Commands</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd">cmd</a> shell</li>
+<li><a href="https://ss64.com/nt/cmd.html">cmd.exe</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/exit">exit</a> shell command</li>
+<li><a href="http://ss64.com/nt/exit.html">exit</a> shell command</li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/nslookup">nslookup</a> program</li>
+<li><a href="http://ss64.com/nt/nslookup.html">nslookup</a> program</li>
+</ul>
+
+<p>
+<a href="handin.html">Turn in</a> a zip file called <code>CS33600Hw1Surname.zip</code> (where <code>Surname</code> is your last name) containing your version of <code>Launcher.java</code>.
+</p>
+
+<p>
+This assignment is due Tuesday, January 27.
+</p>
+
+</section>
+
+<footer>
+  <script>
+    document.write('<small><small><i>Last modified on ' + document.lastModified + '.</i></small></small>');
+  </script>
+  <br>
+  <a href="mailto:rlkraft@pnw.edu"><small><small><i>compliments and criticisms</i></small></small></a>
+</footer>
+
+</body>
+</html>

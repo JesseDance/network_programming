@@ -1,0 +1,27 @@
+#
+#
+CC=gcc
+CFLAGS=-g -std=c99 -pedantic -Wall -Wextra
+
+all: double  create_child_inherit_std_streams  parent_child_share_stdin  parent_child_share_stdout  shared_stdin  very_strange_child
+
+double: double.c
+	$(CC) $(CFLAGS) -o double  double.c
+
+create_child_inherit_std_streams: create_child_inherit_std_streams.c
+	$(CC) $(CFLAGS) -o create_child_inherit_std_streams  create_child_inherit_std_streams.c
+
+parent_child_share_stdin: parent_child_share_stdin.c
+	$(CC) $(CFLAGS) -o parent_child_share_stdin  parent_child_share_stdin.c
+
+parent_child_share_stdout: parent_child_share_stdout.c
+	$(CC) $(CFLAGS) -o parent_child_share_stdout  parent_child_share_stdout.c
+
+shared_stdin: shared_stdin.c
+	$(CC) $(CFLAGS) -o shared_stdin  shared_stdin.c
+
+very_strange_child: very_strange_child.c
+	$(CC) $(CFLAGS) -o very_strange_child   very_strange_child.c
+
+clean:
+	rm -f  double  create_child_inherit_std_streams  parent_child_share_stdin  parent_child_share_stdout  shared_stdin  very_strange_child

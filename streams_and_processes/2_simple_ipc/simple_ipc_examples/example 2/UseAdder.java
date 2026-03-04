@@ -1,43 +1,47 @@
 /*
-   The program "calls" Adder.class as an external process.
-   This is a baby example of parallel programming, or a very
-   simplified example of how a "remote procedure call" might work.
+
 */
-import java.io.*;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+   The program "calls" Adder.class as an external process.
+   This is a baby example of parallel programming, or a very
+   simplified example of how a "remote procedure call" might work.
+*/
 public class UseAdder
 {
    public static void main(String[] args) throws IOException, InterruptedException
    {
       // Build a command-line string for ProcessBuilder.
-      List<String> childArgs = new ArrayList<String>();
+      final List<String> childArgs = new ArrayList<>();
       childArgs.add("java");
       childArgs.add("Adder");
       // Put the command-line arguments of this process
       // on the command-line for the child process.
-      for (int i = 0; i < args.length; i++)
+      for (final String arg : args)
       {
-         childArgs.add(args[i]);
+         childArgs.add(arg);
       }
 
       // Create a ProcessBuilder object for running Adder.class.
-      ProcessBuilder pb = new ProcessBuilder( childArgs );
+      final ProcessBuilder pb = new ProcessBuilder( childArgs );
 
       // "call" the Adder program.
-      Process p = pb.start();
+      final Process p = pb.start();
       // Wait for the "called" process to return.
       p.waitFor();
 
-      // Read the result from the Adder process's standard output.
-      // Create a new stream to read data from the output of the
-      // Adder process.
-      Scanner scanner = new Scanner( p.getInputStream() );
-      int result = scanner.nextInt();
+      // Read the result from the Adder process's standard output stream.
+      // Create a new input stream to read data from the output stream
+      // of the Adder process.
+      final Scanner scanner = new Scanner( p.getInputStream() );
+      final int result = scanner.nextInt();
 
-      // write the result to stdout
+      // Write the result to stdout.
       System.out.println( result );
    }
 }

@@ -1,0 +1,6 @@
+[InternetShortcut]
+URL=https://cscircles.cemc.uwaterloo.ca/java_visualize/#code=public+class+WhatIsAnInteger%0A%7B%0A+++public+static+void+main(String%5B%5D+args)+%0A+++%7B%0A++++++System.out.print(123)%3B%0A++++++System.out.print(%22__%22)%3B%0A++++++System.out.write(123)%3B+//+Look+in+an+ASCII+table.%0A++++++System.out.println()%3B%0A+++%7D%0A%7D%0A//https%3A//docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/PrintStream.html%23print(int)%0A//https%3A//docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/PrintStream.html%23write(int)&mode=
+IDList=
+HotKey=0
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,11

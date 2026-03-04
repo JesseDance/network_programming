@@ -1,0 +1,6 @@
+[InternetShortcut]
+URL=https://cscircles.cemc.uwaterloo.ca/java_visualize/#code=public+class+WeirdBytes%0A%7B%0A+++public+static+void+main(String%5B%5D+args)+%0A+++%7B%0A++++++byte+b1+%3D++0xFF%3B++++++++//+Does+this+look+like+a+byte%3F%0A++++++byte+b2+%3D++0xFFFFFFFF%3B++//+Does+this+look+like+a+byte%3F%0A++++++byte+b3+%3D++0x80%3B++++++++//+Does+this+look+like+a+byte%3F%0A++++++byte+b4+%3D++0xFFFFFF80%3B++//+Does+this+look+like+a+byte%3F%0A++++++byte+b5+%3D++0xFFFFFF00%3B++//+Does+this+look+like+a+byte%3F%0A++++++byte+b6+%3D+-0x01%3B++++++++//+What+byte+is+this%3F%0A++++++byte+b7+%3D+-0x80%3B++++++++//+What+byte+is+this%3F%0A%0A++++++byte+b8+%3D++0x88%3B++++++++//+Does+this+look+like+a+byte%3F%0A++++++byte+b9+%3D++0xFFFFFF88%3B++//+What+byte+is+this%3F%0A++++++byte+b10+%3D+(byte)0x88%3B++//+What+byte+is+this%3F%0A++++++byte+b11+%3D+-0x78%3B+++++++//+What+byte+is+this%3F%0A++++++System.out.printf(%220x%25X%22,+b11)%3B%0A+++%7D%0A%7D&mode=edit
+IDList=
+HotKey=0
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,11

@@ -1,0 +1,15 @@
+#
+#
+CC=gcc
+CFLAGS=-g -std=c99 -pedantic -Wall -Wextra
+
+all: double  create_child_redirect_stdin_stdout
+
+double: double.c
+	$(CC) $(CFLAGS) -o double  double.c
+
+create_child_redirect_stdin_stdout: create_child_redirect_stdin_stdout.c
+	$(CC) $(CFLAGS) -o create_child_redirect_stdin_stdout  create_child_redirect_stdin_stdout.c
+
+clean:
+	rm -f  double  create_child_redirect_stdin_stdout

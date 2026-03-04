@@ -1,0 +1,39 @@
+
+1.) 7-bit ASCII (127 characters)
+    International standard.
+
+2.) 8-but extended ASCII (256 characters)
+    Not standardized.
+    Code pages
+    Code pages vs. fonts
+
+3.) 16-bit Unicode
+    UCS-2 (obsolete)
+    UTF-16
+    UTF-16BE
+    UTF-16LE
+    BOM (Byte-Order-Mark)
+    Need to worry about endianness (byte order).
+    Used by Java, JavaScript, C#, and Windows.
+
+4.) 32-bit Unicode
+    UTF-32
+    UTF-32BE
+    UTF-32LE
+    Need to worry about endianness (byte order).
+    Not used much, wastes too much memory space.
+
+5.) 8-bit Unicode
+    UTF-1 (obsolete)
+    UTF-8
+    What the Internet uses.
+    Variable length encoding of Unicode's 21-bit address space.
+    Uses 1 to 4 bytes per character:
+       0xxxxxxx
+       110xxxxx  10xxxxxx
+       1110xxxx  10xxxxxx  10xxxxxx
+       11110xxx  10xxxxxx  10xxxxxx  10xxxxxx
+
+6.) 21-bit Unicode (~1 million characters)
+    Unicode's code point address space.
+    There is no such thing as UTF-21.

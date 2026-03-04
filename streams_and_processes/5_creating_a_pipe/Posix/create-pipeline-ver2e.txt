@@ -1,0 +1,266 @@
+
+In this version, the parent process creates the pipe and the first
+child process. Then the first child creates the second child process.
+
+This version puts the first child (on which the parent process is
+waiting) on the wrong end of the pipeline.
+
+Start with a parent process.
+
+               parent
+          +----------------+
+          |                |
+  stdin-->> 0            1 >>----> stdout
+          |                |
+          |              2 >>----> stderr
+          |                |
+          +----------------+
+
+Step 1:
+The parent calls pipe() which creates two new file descriptors in the parent.
+
+               parent
+          +----------------+
+          |                |
+  stdin-->> 0            1 >>----> stdout
+          |                |
+          |              2 >>----> stderr
+          |                |
+          |   3        4   |
+          +--/\--------\/--+
+             |          |
+             |          |
+             +-0======0-+
+                 pipe
+
+Step 2:
+The parent calls fork().
+
+                   parent
+              +----------------+
+              |                |
+          +-->> 0            1 >>------------+
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   |   3        4   |             |
+          |   +--/\--------\/--+             |
+          |      |          |                |
+  stdin --+      |          |                +--> stdout
+          |      |          |                |
+          |      +-0======0-+                |
+          |      |   pipe   |                |
+          |      | (shared) |                |
+          |      |          |                |
+          |   +--\/--------/\--+             |
+          |   |   3        4   |             |
+          |   |                |             |
+          +-->> 0            1 >>------------+
+              |                |
+              |              2 >>--> stderr
+              |                |    (shared)
+              +----------------+
+                   child_1
+
+Step 3:
+Parent calls close() on its descriptors 3 and 4
+(and then waits on the child_1 process).
+
+                   parent
+              +----------------+
+              |                |
+          +-->> 0            1 >>------------+
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   +----------------+             |
+  stdin --+                                  +--> stdout
+          |                                  |
+          |        child_1                   |
+          |   +----------------+             |
+          |   |                |             |
+          +-->> 0            1 >>------------+
+              |                |
+              |              2 >>--> stderr
+              |                |    (shared)
+              |   3        4   |
+              +--/\--------\/--+
+                 |          |
+                 |          |
+                 |   pipe   |
+                 +-0======0-+
+
+Step 4:
+child_1 calls fork() to create the child_2 process.
+The pipe is shared by child_1 and child_2.
+Notice how a "pipeline" is now present in this picture.
+
+                   parent
+              +----------------+
+              |                |
+          +-->> 0            1 >>------------+
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   +----------------+             |
+  stdin --+                                  +--> stdout
+          |                                  |
+          |        child_1                   |
+          |   +----------------+             |
+          |   |                |             |
+          +-->> 0            1 >>------------+
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   |   3        4   |             |
+          |   +--/\--------\/--+             |
+          |      |          |                |
+          |      |          |                |
+          |      |   pipe   |                |
+          |      +-0======0-+                |
+          |      |          |                |
+          |      |          |                |
+          |   +--\/--------/\--+             |
+          |   |   3        4   |             |
+          |   |                |             |
+          +-->> 0            1 >>------------+
+              |                |
+              |              2 >>--> stderr
+              |                |    (shared)
+              +----------------+
+                   child_2
+
+Step 5:
+child_1 now calls close(3), close(1), dup(4), close(4).
+
+                   parent
+              +----------------+
+              |                |
+          +-->> 0            1 >>------------+
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   +----------------+             |
+  stdin --+                                  +--> stdout
+          |                                  |
+          |        child_1                   |
+          |   +----------------+             |
+          |   |                |             |
+          +-->> 0              |             |
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   |            1   |             |
+          |   +------------\/--+             |
+          |                 |                |
+          |                 |                |
+          |          pipe   |                |
+          |      +-0======0-+                |
+          |      |          |                |
+          |      |          |                |
+          |   +--\/--------/\--+             |
+          |   |   3        4   |             |
+          |   |                |             |
+          +-->> 0            1 >>------------+
+              |                |
+              |              2 >>--> stderr
+              |                |    (shared)
+              +----------------+
+                   child_2
+
+Step 6:
+child_2 calls close(4), close(0), dup(3), close(3).
+
+                   parent
+              +----------------+
+              |                |
+          +-->> 0            1 >>------------+
+          |   |                |             |
+          |   |              2 >>--> stderr  |
+          |   |                |    (shared) |
+          |   +----------------+             |
+  stdin --+                                  +--> stdout
+          |                                  |
+          |        child_1                   |
+          |   +----------------+             |
+          |   |                |             |
+          +-->> 0              |             |
+              |                |             |
+              |              2 >>--> stderr  |
+              |                |    (shared) |
+              |            1   |             |
+              +------------\/--+             |
+                            |                |
+                            |                |
+                     pipe   |                |
+                 +-0======0-+                |
+                 |                           |
+                 |                           |
+              +--\/------------+             |
+              |   0            |             |
+              |                |             |
+              |              1 >>------------+
+              |                |
+              |              2 >>--> stderr
+              |                |    (shared)
+              +----------------+
+                   child_2
+
+
+Now child_1 and child_2 are configured as a pipeline.
+Here is a simplified picture of the above pipeline.
+
+                        parent
+                    +------------+
+                    |            |
+          +-------->> 0        1 >>-----------------------+
+          |         |            |                        |
+          |         |          2 >>---> stderr            |
+          |         |            |     (shared)           |
+  stdin --+         +------------+                        +--> stdout
+          |                                               |
+          |                                               |
+          |      child_1                   child_2        |
+          |   +------------+            +------------+    |
+          |   |            |    pipe    |            |    |
+          +-->> 0        1 >>-0======0->> 0        1 >>---+
+              |            |            |            |
+              |          2 >>--+        |          2 >>--+--> stderr
+              |            |   |        |            |   |   (shared)
+              +------------+   |        +------------+   |
+                               |                         |
+                               +-------------------------+
+
+
+Recall that the parent process is waiting on the child_1 process,
+which is NOT the correct child to be waiting on! The parent is
+sharing its stdout with child_2, so the parent process should
+be waiting on the child_2 process, but child_2 is not a child
+process of the parent process (child_2 is a child process of
+the child_1 process).
+
+
+Step 7:
+The two child processes now call exec() to run whatever programs
+were desired in the pipeline. For example
+> ls | more
+                        shell
+                    +------------+
+                    |            |
+          +--------->> 0       1 >>-----------------------+
+          |         |            |                        |
+          |         |          2 >>---> stderr            |
+          |         |            |     (shared)           |
+  stdin --+         +------------+                        +--> stdout
+          |                                               |
+          |                                               |
+          |         ls                      more          |
+          |   +------------+            +------------+    |
+          |   |            |    pipe    |            |    |
+          +-->> 0        1 >>-0======0->> 0        1 >>---+
+              |            |            |            |
+              |          2 >>--+        |          2 >>--+--> stderr
+              |            |   |        |            |   |   (shared)
+              +------------+   |        +------------+   |
+                               |                         |
+                               +-------------------------+

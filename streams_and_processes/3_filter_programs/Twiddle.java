@@ -1,14 +1,18 @@
+/*
+
+*/
+
+import java.util.Scanner;
+
 /**
    This program reads two characters at a time from
    standard input, and then writes the two characters
    to standard output in their reverse order.
-
+<p>
    When using Windows, if standard input is the console
    keyboard, use ^z (Control-z) to denote the end of file
    (and you must use ^z at the beginning of a line!).
 */
-import java.util.Scanner;
-
 public class Twiddle
 {
    public static void main(String[] args)
@@ -32,6 +36,15 @@ public class Twiddle
             }
          }
          System.out.println();
+         if ( System.out.checkError() )
+            throw new RuntimeException("System.out has encountered an IOException");
       }
+   }
+
+
+   // Private default constructor to enforce noninstantiable class.
+   // See Item 4 in "Effective Java", 3rd Ed, Joshua Bloch.
+   private Twiddle() {
+      throw new AssertionError();
    }
 }

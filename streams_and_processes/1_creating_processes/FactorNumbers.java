@@ -10,6 +10,8 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 /**
    This program uses the Java Process API to run
@@ -24,7 +26,7 @@ public class FactorNumbers
    public static void main(String[] args)
    {
       // Each of these numbers takes about 25 seconds to factor.
-      final String number1 = "37591057185623057848";
+      final String number1 = "37591057185x623057848";
       final String number2 = "375910571856230578480";
 
       final long startTime = System.currentTimeMillis();
@@ -55,6 +57,32 @@ public class FactorNumbers
          System.out.println("waiting...");
          p1.waitFor();
          p2.waitFor();
+         if (0 != p1.exitValue()) // Check if the first child process failed.
+         {  // Read the standard error stream from the child processes.
+            try (final BufferedReader err = new BufferedReader(
+                                               new InputStreamReader(
+                                                  p1.getErrorStream())))
+            {
+               String oneLine;
+               while ((oneLine = err.readLine()) != null) // read up to end-of-stream
+               {
+                  System.out.println("number1 ===> " + oneLine);
+               }
+            }
+         }
+         if (0 != p2.exitValue()) // Check if the second child process failed.
+         {  // Read the standard error stream from the child processes.
+            try (final BufferedReader err = new BufferedReader(
+                                               new InputStreamReader(
+                                                  p2.getErrorStream())))
+            {
+               String oneLine;
+               while ((oneLine = err.readLine()) != null) // read up to end-of-stream
+               {
+                  System.out.println("number2 ===> " + oneLine);
+               }
+            }
+         }
       }
       catch (IOException e)
       {

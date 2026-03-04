@@ -64,7 +64,7 @@ computers, lots of programs make use of lots of environment variables.
 
 You can see your computer's default set of environment variables by opening
 a command-prompt window and at the prompt typing the following simple
-command-line
+command-line.
 
     > set
 
