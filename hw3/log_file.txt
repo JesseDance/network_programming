@@ -1,0 +1,60 @@
+
+Server log of 6 messages.
+
+10000110 (6 characters)
+&<+=]W
+
+00110011
+Sending long = -1366767178821212779 (0xed08447e07b2e595)
+95  e5  b2  07  7e  44  08  ed  
+Sending long = -6365696687517026600 (0xa7a88096f0aab6d8)
+d8  b6  aa  f0  96  80  a8  a7  
+Sending float = 569182.2500000000 (0x490af5e4)
+f5 e4 49 0a
+Sending float = -845866.0000000000 (0xc94e82a0)
+82 a0 c9 4e
+Sending long = -7666122241539253264 (0x959c76702c54dbf0)
+f0  db  54  2c  70  76  9c  95  
+Sending long = 9083024630390082655 (0x7e0d62c704864c5f)
+5f  4c  86  04  c7  62  0d  7e  
+Sending float = 95181.7265625000 (0x47b9e6dd)
+e6 dd 47 b9
+
+10100101 (37 characters)
+#hqEtv=(@<]V5Uv]q@$k}^?Z,e0z#Y+*GoxaE
+
+00110001
+Sending long = -3058913693809540407 (0xd58c8e33c9e782c9)
+c9  82  e7  c9  33  8e  8c  d5  
+Sending float = 0.4354494810 (0x3edef33c)
+f3 3c 3e de
+Sending float = 200890.7656250000 (0x48442eb1)
+2e b1 48 44
+Sending float = -0.8044809103 (0xbf4df276)
+f2 76 bf 4d
+Sending long = 21340480172094439 (0x004bd10dbbfe73e7)
+e7  73  fe  bb  0d  d1  4b  00  
+Sending long = -5830806887001090741 (0xaf14d0077a66154b)
+4b  15  66  7a  07  d0  14  af  
+Sending float = -91.8011016846 (0xc2b79a2a)
+9a 2a c2 b7
+
+00000101
+Sending long = -2771643296630521752 (0xd989251b443ec068)
+68  c0  3e  44  1b  25  89  d9  
+Sending float = -9722.9628906250 (0xc617ebda)
+eb da c6 17
+Sending long = 494794336057647214 (0x06dddcd3bd97606e)
+6e  60  97  bd  d3  dc  dd  06  
+Sending float = -2.5844211578 (0xc0256728)
+67 28 c0 25
+Sending float = -3713.8247070313 (0xc5681d32)
+1d 32 c5 68
+Sending float = -47183.7578125000 (0xc7384fc2)
+4f c2 c7 38
+Sending float = 36702.6796875000 (0x470f5eae)
+5e ae 47 0f
+
+10000000
+
+The server wrote 169 bytes to standard output.
