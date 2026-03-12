@@ -23,8 +23,8 @@ public class slop_client {
 
                 // End-of-transmission message (0x80)
                 if (header == 0x80) {
-                    System.out.println("\nEnd of transmission.");
-                    System.out.println("Total bytes received: " + byteCount);
+                    // System.out.println("\nEnd of transmission.");
+                    System.out.printf("Read %d bytes from standard input", byteCount);
                     return;
                 }
 
